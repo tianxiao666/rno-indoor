@@ -1,0 +1,137 @@
+package com.hgicreate.rno.service;
+
+import com.hgicreate.rno.domain.MtSignalMeaData;
+import com.hgicreate.rno.domain.MtSignalMeaDataInfo;
+import com.hgicreate.rno.mapper.MtSignalMeaDataMapper;
+import com.hgicreate.rno.repository.MtSignalMeaDataRepository;
+import com.hgicreate.rno.service.dto.MtSignalMeaDataInfoDTO;
+import com.hgicreate.rno.web.rest.vm.MtSignalMeaDataQueryVM;
+import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+@Slf4j
+@Service
+@Transactional
+public class MtSignalMeaDataService {
+
+    private final MtSignalMeaDataMapper mtSignalMeaDataDaoMapper;
+    private final MtSignalMeaDataRepository mtSignalMeaDataRepository;
+
+    public MtSignalMeaDataService(MtSignalMeaDataMapper mtSignalMeaDataDaoMapper, MtSignalMeaDataRepository mtSignalMeaDataRepository) {
+        this.mtSignalMeaDataDaoMapper = mtSignalMeaDataDaoMapper;
+        this.mtSignalMeaDataRepository = mtSignalMeaDataRepository;
+    }
+
+    public List<MtSignalMeaDataInfo> queryMtSignalMeaData(MtSignalMeaDataQueryVM vm) {
+        return mtSignalMeaDataDaoMapper.queryMtSignalMeaData(vm);
+    }
+
+    public List<MtSignalMeaDataInfoDTO> queryMtSignalMeaDataDTOs(MtSignalMeaDataQueryVM vm) {
+        List<MtSignalMeaDataInfoDTO> dtoList = mtSignalMeaDataDaoMapper.queryMtSignalMeaData(vm).
+                stream().
+                map(com.hgicreate.rno.service.mapper.MtSignalMeaDataMapper.INSTANCE::mtSignalMeaDataInfoToMtSignalMeaDataInfoDTO).
+                collect(Collectors.toList());
+        return dtoList;
+    }
+
+    public boolean saveMtSignalMeaData(String jsonArrayObj){
+
+        if (jsonArrayObj==null || "".equals(jsonArrayObj)) return false;
+        MtSignalMeaData mtSignalMeaData = new MtSignalMeaData();
+        try {
+            //转换成为JSONObject对象
+            JSONObject jsonObj = new JSONObject(jsonArrayObj);
+            mtSignalMeaData.setBuildingId(jsonObj.getString("BUILDING_ID"));
+            mtSignalMeaData.setFloorId(jsonObj.getString("FLOOR_ID"));
+            mtSignalMeaData.setDrawMapId(jsonObj.getString("DRAW_MAP_ID"));
+            mtSignalMeaData.setSignal(jsonObj.getString("SIGNAL"));
+            mtSignalMeaData.setLatitude(jsonObj.getString("LATITUDE"));
+            mtSignalMeaData.setLongitude(jsonObj.getString("LONGITUDE"));
+            mtSignalMeaData.setDeviceId(jsonObj.getString("DEVICE_ID"));
+            mtSignalMeaData.setPlaneX(jsonObj.getString("PLANE_X"));
+            mtSignalMeaData.setPlaneY(jsonObj.getString("PLANE_Y"));
+            mtSignalMeaData.setSignalType(jsonObj.getString("SIGNAL_TYPE"));
+
+            Date d = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            String dateNowStr = sdf.format(d);
+
+            mtSignalMeaData.setMeaDate(dateNowStr);
+
+            mtSignalMeaDataRepository.save(mtSignalMeaData);
+        }catch (Exception e){
+            log.debug("mtSignalMeaData时出现异常，exception={}",e);
+            return false;
+        }finally {
+            log.debug("saveIdealApMeaData数据属性，mtSignalMeaData={}",mtSignalMeaData.toString());
+            mtSignalMeaData =null;
+        }
+        return true;
+    }
+
+    /*public String getMtSignalGridMeaData(String jsonArrayObj){
+
+        String message = "";
+        if (jsonArrayObj==null || "".equals(jsonArrayObj)) return "参数为空！";
+        Map<String,Object> map = new HashMap<String,Object>();
+        List<Map<String,Object>> lists;
+        try {
+            //转换成为JSONObject对象
+            JSONObject jsonObj = new JSONObject(jsonArrayObj);
+            map.put("buildingId",jsonObj.getString("BUILDING_ID"));
+            map.put("floorId",jsonObj.getString("FLOOR_ID"));
+            map.put("drawMapId",jsonObj.getString("DRAW_MAP_ID"));
+            map.put("signalType",jsonObj.getString("SIGNAL_TYPE"));
+            map.put("startDate",jsonObj.getString("START_DATE"));
+            map.put("endDate",jsonObj.getString("END_DATE"));
+
+            //先确定点坐标归属方格区域
+            double x = Double.parseDouble(jsonObj.getString("PLANE_X"));
+            double y = Double.parseDouble(jsonObj.getString("PLANE_Y"));
+            double length = Double.parseDouble(jsonObj.getString("WIDTH"));
+            double width = Double.parseDouble(jsonObj.getString("HEIGHT"));
+            //长分10格
+            int m = 10;
+            //宽分10格
+            int n = 10;
+            //单元方格长
+            double grid_len = length/m;
+            //单元方格宽
+            double grid_wid = width/n;
+            //确定矩阵栅格列
+            double col = floor(x/grid_len);
+            //确定矩阵栅格行
+            double row = floor(y/grid_wid);
+            //左上
+            double grid_ltx = grid_len*col;
+            double grid_lty = grid_wid*row;
+            //右下
+            double grid_rbx = grid_len*(col+1);
+            double grid_rby = grid_wid*(row+1);
+            //区域确定结束
+            map.put("gridLtx",grid_ltx);
+            map.put("gridLty",grid_lty);
+            map.put("gridRbx",grid_rbx);
+            map.put("gridRby",grid_rby);
+
+            lists = mtSignalMeaDataDaoMapper.getMtSignalGridMeaData(map);
+        }catch (Exception e){
+            message = "移动终端图层栅格化信号测量数据输出数据库出错......！";
+            log.debug("getMtSignalGridMeaData 移动终端图层栅格化信号测量数据输出数据库出错......！，exception={}",e);
+            return message;
+        }finally {
+            log.debug("getMtSignalGridMeaData 数据属性={}",map.toString());
+            map.clear();
+        }
+        message = "共获取栅格数据"+lists.size()+"条";
+        return message;
+    }*/
+}

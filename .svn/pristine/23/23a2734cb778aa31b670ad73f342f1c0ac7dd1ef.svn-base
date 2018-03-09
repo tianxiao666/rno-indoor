@@ -1,0 +1,164 @@
+package com.hgicreate.rno.config;
+
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import org.dom4j.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * 解析xml和生成xml
+ */
+@Slf4j
+public class XMLUtil {
+
+    private static final String title = "title";
+    private static final String desc = "desc";
+    private static final String width = "width";
+    private static final String height = "height";
+
+    public static Svg getSvgInfo(String xml) {
+
+        /*SAXReader sax=new SAXReader();//创建一个SAXReader对象
+        File xmlFile=new File(xml);//根据指定的路径创建file对象
+        Document document=sax.read(xmlFile);//获取document对象,如果文档无节点，则会抛出Exception提前结束
+        Element root=document.getRootElement();//获取根节点*/
+        // 将字符串转为XML
+        Document document = null;
+        try {
+            document = DocumentHelper.parseText(xml);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+            log.error("XML解析出现错误：{}", e.getMessage());
+        }
+        //获取根节点
+        Element root = document.getRootElement();
+
+        Map<String, Object> obj = new HashMap<String, Object>();
+
+        List<SvgLayer> svgLayers = null;
+        SvgLayer svgLayer = null;
+        SvgElem svgElem = null;
+
+        List<SvgElem> svgElems = null;
+        Map<String, String> svgAttrs = null;
+
+        Svg svg = new Svg();
+
+        List<Attribute> svgList = root.attributes();
+        svgList.forEach(a -> {
+            if (width == a.getName()) {
+                svg.setWidth(a.getValue());
+            }
+            if (height == a.getName()) {
+                svg.setHeight(a.getValue());
+            }
+        });
+
+        svgLayers = new ArrayList<SvgLayer>();
+        List<Element> gLists = root.elements();
+        for (Element layer : gLists) {
+            List<Element> gList = layer.elements();
+            //图层 跳过g
+            svgElems = new ArrayList<SvgElem>();
+            for (Element element : gList) {
+                //元素
+                if (title.equals(element.getName())) {
+                    svgLayer = new SvgLayer();
+                    svgLayer.setTitle(element.getStringValue());
+                } else if (desc.equals(element.getName())) {
+                    svgLayer.setDesc(element.getStringValue());
+                    svgLayers.add(svgLayer);
+                } else {
+                    svgElem = new SvgElem();
+                    svgElem.setElementName(element.getName());
+                    if (!"".equals(element.getStringValue())) {
+                        //该元素有值
+                        svgElem.setElementVal(element.getStringValue());
+                    }
+                    svgAttrs = new HashMap<String, String>();
+                    List<Attribute> listAttr = element.attributes();
+                    for (Attribute attr : listAttr) {
+                        //属性
+                        String name = attr.getName();//属性名称
+                        String value = attr.getValue();//属性的值
+                        if (element.getName() != title || element.getName() != desc) {
+                            svgAttrs.put(name, value);
+                        }
+                    }
+                    svgElem.setSvgAttrs(svgAttrs);
+                    //排除title与desc元素
+                    svgElems.add(svgElem);
+                }
+                svgLayer.setSvgElems(svgElems);
+            }
+        }
+        svg.setSvgLayers(svgLayers);
+        return svg;
+    }
+
+
+    @Data
+    static class Svg {
+        String width;
+        String height;
+        List<SvgLayer> svgLayers;
+    }
+
+    @Data
+    static class SvgLayer {
+        String title;
+        String desc;
+        List<SvgElem> svgElems;
+    }
+
+    @Data
+    static class SvgElem {
+        String elementName;
+        String elementVal;
+        //        List<SvgAttr> svgAttrs;
+        Map<String, String> svgAttrs;
+    }
+    /*@Data
+    static class SvgAttr{
+        String attrName;
+        String attrVal;
+    }*/
+
+    public static void main(String[] args) throws DocumentException {
+        /*SAXReader sax=new SAXReader();//创建一个SAXReader对象
+        File xmlFile=new File("D:\\tmp\\test1.xml");//根据指定的路径创建file对象
+        Document document=sax.read(xmlFile);//获取document对象,如果文档无节点，则会抛出Exception提前结束
+        Element root=document.getRootElement();//获取根节点*/
+//        getNodes1(root);//从根节点开始遍历所有节点
+        Svg b = getSvgInfo(xml);
+        System.out.println(b);
+//        System.out.println(b.getSvgLayers().get(0).getSvgElems().get(0));
+        log.debug("b.getSvgLayers().get(0).getSvgElems().get(0)=" + b.getSvgLayers().get(0).getSvgElems().get(0));
+//        System.out.println(getTimeByCalendar());
+    }
+
+    private static final String xml = "<svg width=\"374\" height=\"276\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
+            " <g>\n" +
+            "  <title>图层 4</title>\n" +
+            "  <desc>STAIR</desc>\n" +
+            "  <line id=\"C5FF3626B090000290FE1AF04A941DCD\" y2=\"148.85714\" x2=\"181.14286\" y1=\"148.85714\" x1=\"162.57143\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke-width=\"null\" stroke=\"#000000\" fill=\"none\"/>\n" +
+            "  <rect id=\"C5FF35F2B7200002502766491A006E40\" height=\"18\" width=\"18.85714\" y=\"118.85714\" x=\"162.28571\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke=\"#00ffff\" fill=\"none\"/>\n" +
+            "  <line id=\"C5FF36048020000216821E9417B01B45\" y2=\"127.71429\" x2=\"181.14286\" y1=\"127.42857\" x1=\"162\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke=\"#000000\" fill=\"none\"/>\n" +
+            "  <rect id=\"C5FF360DE89000021135BD701D401F9E\" height=\"17.71429\" width=\"1.71429\" y=\"119.14286\" x=\"164.28571\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke=\"#00ffff\" fill=\"none\"/>\n" +
+            "  <rect id=\"C5FF36116A1000027B64154919203D50\" height=\"17.14286\" width=\"2.28571\" y=\"119.14286\" x=\"176.85714\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke=\"#00ffff\" fill=\"none\"/>\n" +
+            "  <rect id=\"C5FF3613CC100002FC23B42B568211FF\" height=\"17.42857\" width=\"2.28571\" y=\"119.14286\" x=\"168.28571\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke=\"#00ffff\" fill=\"none\"/>\n" +
+            "  <rect id=\"C5FF361568900002BCA69C9C1F921070\" height=\"16.85714\" width=\"2.28571\" y=\"119.42857\" x=\"172.57143\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke=\"#00ffff\" fill=\"none\"/>\n" +
+            "  <rect id=\"C5FF361C94900002B68F16001E008AF0\" height=\"18.57143\" width=\"18.57143\" x=\"162.57143\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke-width=\"null\" stroke=\"#00ffff\" fill=\"none\" y=\"140\"/>\n" +
+            "  <rect id=\"C5FF361F9B20000295D2253110D7E900\" height=\"18.85714\" width=\"2\" y=\"140.28571\" x=\"164.57143\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke-width=\"null\" fill=\"none\" stroke=\"#00ffff\"/>\n" +
+            "  <rect id=\"C5FF3621EB200002D8BA1CB013E5F160\" height=\"18\" y=\"140.28571\" x=\"176.85714\" stroke-linecap=\"null\" width=\"2\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke-width=\"null\" stroke=\"#00ffff\" fill=\"none\"/>\n" +
+            "  <rect id=\"C5FF362354A0000251D61605C90C1209\" height=\"18.28571\" width=\"2\" y=\"140.57143\" x=\"168.85714\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke-width=\"null\" stroke=\"#00ffff\" fill=\"none\"/>\n" +
+            "  <rect id=\"C5FF36249810000246761BE01CC02900\" height=\"18.57143\" width=\"2\" y=\"140.28571\" x=\"172.85714\" stroke-linecap=\"null\" stroke-linejoin=\"null\" stroke-dasharray=\"null\" stroke-width=\"null\" stroke=\"#00ffff\" fill=\"none\"/>\n" +
+            " </g>\n" +
+            " </svg>";
+
+
+}

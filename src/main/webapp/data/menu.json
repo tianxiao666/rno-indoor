@@ -1,0 +1,43 @@
+{
+  "title": "怡创多网室分优化系统",
+  "menu": [
+    {
+      "title": "场所管理",
+      "sub": [
+        {
+          "title": "场所管理",
+          "url": "indoor/place-management/place-management.html"
+        },
+        {
+          "title": "楼层管理",
+          "url": "indoor/floor-management/floor-management.html"
+        },
+        {
+          "title": "楼层平面图管理",
+          "url": "indoor/floor-plan-management/floor-plan-management.html"
+        },
+        {
+          "title": "定位信息管理",
+          "url": "indoor/ap-management/ap-management.html"
+        },
+        {
+          "title": "POI管理",
+          "url": "indoor/poi-management/poi-management.html"
+        }
+      ]
+    },
+    {
+      "title": "测量信息管理",
+      "sub": [
+        {
+          "title": "理想AP管理",
+          "url": "indoor/ideal-ap-management/ideal-ap-management.html"
+        },
+        {
+          "title": "移动终端信号管理",
+          "url": "indoor/mt-signal-management/mt-signal-management.html"
+        }
+      ]
+    }
+  ]
+}

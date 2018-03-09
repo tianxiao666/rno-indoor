@@ -1,0 +1,16 @@
+logging:
+    level:
+        com.hgicreate.rno: debug
+
+spring:
+    datasource:
+        url: jdbc:oracle:thin:@192.168.50.20:1521:rnodb
+        username: rno4dev
+        password: 123456
+    jpa:
+        database-platform: org.hibernate.dialect.Oracle10gDialect
+        database: ORACLE
+        show-sql: true
+        properties:
+            hibernate.format_sql: true
+uploadDir: E:\test\pic\

@@ -1,0 +1,61 @@
+package com.hgicreate.rno.service.api;
+
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+
+public class Api {
+
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();// 线程安全
+
+    protected String createRenderTemplate(int isSuccess, String content, String message) {
+        content = gson.toJson(content);
+        message = gson.toJson(message);
+        String jsonStr = "{\"success\":" + isSuccess + ",\"content\":" + content + ",\"message\":" + message + "}";
+        return jsonStr;
+    }
+
+    public String renderSuccessJson(Object content,boolean flag) {
+        String rederData = "";
+        if (flag){
+            String json = gson.toJson(content);
+            rederData = createRenderTemplate(1, json, "");
+        }else {
+            rederData = createRenderTemplate(1, content.toString(), "");
+        }
+        return rederData;
+    }
+
+    public String renderErrorJson(String message) {
+        String rederData = createRenderTemplate(0, "", message);
+        return rederData;
+    }
+
+    public String objectToJson(Object object){
+        return gson.toJson(object);
+    }
+
+    public static void main(String[] arg){
+
+        String s = "{'a':'344','b':'666'}";
+        System.out.println(gson.toJson(s));
+        String a = "{'success':1,'content':2,'message':1}";
+        JSONObject test = new JSONObject(a);
+        System.out.println(test.getInt("success"));
+        String b = "{'success':1,'content':\"{'TOTALCOUNT':4,'NearbyBuildingList':[{\"SITE\":\"http://map.baidu.com/?newmap\u003d1\u0026s\u003dinf%26uid%3D2f55e23bbfd69d0f4e776e7b%26wd%3D%E8%B4%A2%E5%AF%8C%E4%B8%96%E7%BA%AA%E5%B9%BF%E5%9C%BA%26all%3D1%26c%3D257\\\\u0026from\\\\u003dalamap\\\\u0026tpl\\\\u003dmapdots\\\",\\\"DISTANCE\\\":0.08,\\\"LT_LATITUDEL\\\":23.130683,\\\"PHONE\\\":\\\"(020)38792338\\\",\\\"BUILD_TYPE\\\":\\\"OFFIC\\\",\\\"PROV\\\":440000,\\\"BUILDING_NAME\\\":\\\"越秀财富世纪广场写字楼\\\",\\\"RB_LATITUDEL\\\":23.1303104,\\\"DISTRICT\\\":440106,\\\"RB_LONGITUDEL\\\":113.347184,\\\"STATUS\\\":\\\"A\\\",\\\"CITY\\\":440100,\\\"NOTE\\\":\\\"财富世纪广场[1]（D3-7地块）位于珠江新城东区，东临20米宽的南安路，南临20米宽的海业路；紧临红线女歌剧院、五星级酒店、多个甲级写字楼\\\\r\\\\n及高档住宅项目，商圈商业氛围非常成熟。项目为149米的高层建筑，由两栋分别为35层、28层的写字楼及公寓构成，写字楼、公寓户型方正实用，公寓6层以上均有阳台，增加使用舒适度，户型丰富多样；罕见超高层高：写\\\\r\\\\n字楼4米；公寓3.1米，舒适度高。\\\",\\\"ADDRESS\\\":\\\"广州市珠江新城海安路13号(黄埔大道隧道出200米右转入海业路即达)\\\",\\\"TOTAL_FLOOR\\\":35,\\\"MOD_TIME\\\":\\\"Jan 22, 2014 5:41:07 PM\\\",\\\"CREATE_TIME\\\":\\\"Jan 13, 2014 11:21:22 AM\\\",\\\"BUILDING_ID\\\":2,\\\"LT_LONGITUDEL\\\":113.346635}]}\",'message':}";
+        HashMap<String, String> map = gson.fromJson(a,new TypeToken<HashMap<String, String>>() {
+        }.getType());
+        System.out.println(map.get("success"));
+        map = gson.fromJson(b,new TypeToken<HashMap<String, Object>>() {
+        }.getType());
+        System.out.println(map.get("content"));
+        String jsonStr = "{\"success\":1,\"content\":\"fdfd\",\"message\":\"你好\"}";
+        map = gson.fromJson(map.get("content"),new TypeToken<HashMap<String, Object>>() {
+        }.getType());
+        System.out.println(map.get("NearbyBuildingList"));
+    }
+}

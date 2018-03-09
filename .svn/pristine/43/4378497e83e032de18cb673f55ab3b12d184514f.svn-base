@@ -1,0 +1,22 @@
+package com.hgicreate.rno.service.mapper;
+
+import com.hgicreate.rno.domain.MtSignalMeaData;
+import com.hgicreate.rno.domain.MtSignalMeaDataInfo;
+import com.hgicreate.rno.service.dto.MtSignalMeaDataDTO;
+import com.hgicreate.rno.service.dto.MtSignalMeaDataInfoDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
+
+@Mapper
+public interface MtSignalMeaDataMapper {
+
+    MtSignalMeaDataMapper INSTANCE = Mappers.getMapper(MtSignalMeaDataMapper.class);
+
+    @Mapping(source = "id", target = "id")
+    MtSignalMeaDataInfoDTO mtSignalMeaDataInfoToMtSignalMeaDataInfoDTO(MtSignalMeaDataInfo mtSignalMeaDataInfo);
+
+    @Mapping(source = "signalId", target = "signalId")
+    MtSignalMeaDataDTO mtSignalMeaDataToMtSignalMeaDataDTO(MtSignalMeaData mtSignalMeaData);
+
+}

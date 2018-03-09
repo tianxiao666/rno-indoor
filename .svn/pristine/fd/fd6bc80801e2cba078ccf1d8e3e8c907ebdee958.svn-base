@@ -1,0 +1,476 @@
+package com.hgicreate.rno.config;
+
+import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+
+/**
+ * 系统字典
+ */
+@Service
+public class CDict {
+
+    final int Master_Dimension_NONE = 1;
+    final int Master_Dimension_AUTO = 2;
+    final int Master_Dimension_HEIGHT = 3;
+    final int Master_Dimension_WIDTH = 4;
+    final int Master_Dimension_EQUAL = 5;
+
+    public HashMap<String, String> BASEMENT = new HashMap<String, String>() {
+        {
+            put("Y", "地上");
+            put("N", "地下");
+        }
+    };
+    public HashMap<String, String> FLOOR_TYPE = new HashMap<String, String>() {
+        {
+            put("LOOBY", "大堂");
+            put("FUEST", "客房");
+            put("EFOOD", "餐饮");
+        }
+    };
+    public HashMap<String, String> FLOOR_STATUS = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("X", "失效");
+        }
+    };
+    public HashMap<String, String> EQUT_STATUS = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("E", "编辑中");
+            put("X", "禁用");
+        }
+    };
+    public HashMap<String, String> EQUT_TYPE = new HashMap<String, String>() {
+        {
+            put("PBX", "交换机");
+            put("AP", "AP");
+        }
+    };
+    public HashMap<String, String> EQUT_BRANDS = new HashMap<String, String>() {
+        {
+            put("BRAN1", "品牌1");
+            put("BRAN2", "品牌2");
+            put("BRAN3", "品牌3");
+        }
+    };
+    public HashMap<String, String> EQUT_FACTORY = new HashMap<String, String>() {
+        {
+            put("ZXING", "中兴");
+            put("HUA_S", "华三");
+            put("HUA_W", "华为");
+        }
+    };
+    public HashMap<String, String> POI_TYPE = new HashMap<String, String>() {
+        {
+            put("ANTS", "室内天线");
+            put("DING", "餐饮");
+            put("SHOP", "购物");
+            put("FUNC", "休闲娱乐");
+        }
+    };
+    public HashMap<String, String> ANT_FREQUENCYS = new HashMap<String, String>() {
+        {
+            put("945", "GSM900(930～960)");
+            put("1842", "DCS1800(1805～1880)");
+            put("1900", "TD-SCDMA BF(1880～1920)");
+            put("2020", "TD-SCDMA A(2015～2025)");
+            put("2350", "TD-SCDMA CE(2300～2400)");
+            put("1897", "TD-LTE F(1880～1915)");
+            put("2017", "TD-LTE A(2010～2025)");
+            put("2345", "TD-LTE E(2320～2370)");
+            put("2442", "WLAN(2400～2484)");
+        }
+    };
+    public HashMap<String, String> POI_STATUS = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("E", "编辑中");
+            put("X", "禁用");
+        }
+    };
+    public HashMap<String, String> SVG_LAYER_TYPE = new HashMap<String, String>() {
+        {
+            put("OUT_WALL", "OUT_W");
+            put("AP", "AP");
+            put("POI", "POI");
+        }
+    };
+    public HashMap<String, String> BUILD_TYPE = new HashMap<String, String>() {
+        {
+            put("MALL_", "大型商场");
+            put("OFFIC", "写字楼");
+            put("LARGE", "大型场馆");
+            put("TRAFF", "交通枢纽");
+        }
+    };
+    public HashMap<String, String> BUILD_STATUS = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("E", "编辑中");
+            put("X", "失效");
+        }
+    };
+    public HashMap<String, String> PLANEGRAPH_UNIT = new HashMap<String, String>() {
+        {
+            put("px", "像素");
+            put("cm", "厘米");
+            put("mm", "毫米");
+            put("in", "英寸");
+            put("pt", "点");
+            put("pc", "Picas");
+            put("em", "Ems");
+            put("ex", "Exs");
+        }
+    };
+    public HashMap<String, String> DEFAULT_PLANEGRAPH = new HashMap<String, String>() {
+        {
+            put("DW_SCALE", "0.15");// 1像素对应0.15m
+            put("DW_UNIT", "px");
+            put("BACKGROUD_COLOR", "#FFFFFF");
+            put("STATUS", "E");
+        }
+    };
+    public HashMap<String, String> STATUS_OPTIONS_NAME = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("X", "失效");
+            put("E", "过期");
+        }
+    };
+    public HashMap<String, String> LSCONTRACT_STATUS = new HashMap<String, String>() {
+        {
+            put("YES", "Y");
+            put("NO", "N");
+        }
+    };
+    public HashMap<String, String> LSCONTRACT_STATUS_NAME = new HashMap<String, String>() {
+        {
+            put("Y", "正常");
+            put("N", "停用");
+        }
+    };
+    public HashMap<String, String> WIKI_TYPE_VALUES = new HashMap<String, String>() {
+        {
+            put("JIAOTONG", "JIAOTONG");// 交通
+            put("PIAOJIA", "PIAOJIA");// 票价
+            put("KAIFANGSHIJIAN", "KAIFANGSHIJIAN");// 开放时间
+            put("TEICHAN", "TEICHAN");// 特产
+        }
+    };
+    public HashMap<String, String> SYS_SUBS_STATE = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("X", "禁用");
+        }
+    };
+    public HashMap<String, String> SYS_LOG_TYPE = new HashMap<String, String>() {
+        {
+            put("ADM", "登录后台");
+            put("OAD", "退出后台");
+            put("PRV", "权限管理");
+            put("USR", "用户管理");
+            put("SZU", "修改资料");
+            put("LOG", "日志管理");
+        }
+    };
+    public HashMap<String, String> SYS_LOG_PRI = new HashMap<String, String>() {
+        {
+            put("SYS", "系统管理");
+            put("USE", "使用日志");
+        }
+    };
+    public HashMap<String, String> USER_GENDER = new HashMap<String, String>() {
+        {
+            put("M", "男");
+            put("W", "女");
+            put("S", "保密");
+        }
+    };
+    public HashMap<String, String> MEDIA_TYPE = new HashMap<String, String>() {
+        {
+            put("IMG", "图片");
+            put("VID", "视频");
+            put("SND", "音频");
+            put("DOC", "文档");
+            put("ZIP", "压缩文件");
+            put("UNK", "其他");
+        }
+    };
+    public HashMap<String, String> AUDIT_TYPE = new HashMap<String, String>() {
+        {
+            put("DIS", "禁用");
+            put("PAS", "通用");
+            put("DEL", "删除");
+        }
+    };
+    public HashMap<String, String> AUDIT_RESULT = new HashMap<String, String>() {
+        {
+            put("A", "通过");
+            put("X", "不通用");
+            put("P", "禁止显示");
+            put("F", "出错");
+        }
+    };
+    public HashMap<String, String> SYS_ROLE_TYPE = new HashMap<String, String>() {
+        {
+            put("SYS", "系统预设");
+            put("USR", "用户自定义");
+        }
+    };
+    public HashMap<String, String> SYS_PRIV_TYPE = new HashMap<String, String>() {
+        {
+            put("SYS", "系统预设");
+            put("USR", "用户自定义");
+        }
+    };
+    public HashMap<String, String> SYS_USL_ROLE = new HashMap<String, String>() {
+        {
+            put("USER", "USER");
+        }
+    };
+    public HashMap<String, String> SYS_COL_STATUS = new HashMap<String, String>() {
+        {
+            put("A", "启用");
+            put("X", "禁用");
+        }
+    };
+    public HashMap<String, String> SYS_NOTICE_SER_CODE = new HashMap<String, String>() {
+        {
+            put("ART", "文章");
+            put("MED", "媒体");
+        }
+    };
+    public HashMap<String, String> SYS_FEEDBACK_STATUS = new HashMap<String, String>() {
+        {
+            put("X", "未审核");
+            put("A", "处理中");
+            put("F", "已处理");
+            put("D", "删除");
+        }
+    };
+    public HashMap<String, String> SYS_PROD_STATUS = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("P", "停用");
+        }
+    };
+    public HashMap<String, String> SYS_TRY_STATUS = new HashMap<String, String>() {
+        {
+            put("A", "开始");
+            put("P", "暂停");
+            put("E", "结束");
+            put("X", "禁用");
+        }
+    };
+    public HashMap<String, String> SYS_TRY_REPORT_STATUS = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("E", "结束");
+        }
+    };
+    public HashMap<String, String> SYS_ECLIENT_STATUS = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("X", "禁用");
+        }
+    };
+    // 禁用的人名
+    public HashMap<String, String> FORBIDNAME = new HashMap<String, String>() {
+        {
+            put("0", "温家宝");
+            put("1", "毛泽东");
+            put("2", "邓小平");
+            put("3", "江泽民");
+            put("4", "胡锦涛");
+            put("5", "习近平");
+        }
+    };
+    public HashMap<String, String> INTENSTION = new HashMap<String, String>() {
+        {
+            put("1", "极佳");
+            put("2", "强");
+            put("3", "一般");
+            put("4", "差");
+            put("5", "很差");
+        }
+    };
+    public HashMap<String, String> DIAGNOSES_STATE = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("S", "结束");
+            put("D", "删除");
+        }
+    };
+    public HashMap<String, String> STATAU = new HashMap<String, String>() {
+        {
+            put("A", "启用");
+            put("X", "停用");
+        }
+    };
+    //设施点
+    public HashMap<String, String> FPOINTTOTYPE = new HashMap<String, String>() {
+        {
+            put("卫生间", "WEISHENGJIAN");
+            put("游客服务", "YOUKEFUWU");
+            put("出入口", "CHURUKOU");
+            put("停车场", "TINGCHECHANG");
+            put("治安点", "ZHIANDIAN");
+            put("加油站", "JIAYOUZHAN");
+            put("其他", "QITA");
+            put("售票点", "SHOUPIAODIAN");
+            put("交通站点", "JIAOTONGZHANDIAN");
+            put("医务室", "YIWUSHI");
+        }
+    };
+    public HashMap<String, String> int_error_code = new HashMap<String, String>() {
+        {
+            put("001", "未登录");
+            put("002", "验证失败");
+            put("003", "操作失败");
+            put("004", "参数不存在");
+            put("005", "");
+        }
+    };
+    public HashMap<String, String> prod_price_week = new HashMap<String, String>() {
+        {
+            put("1", "周一");
+            put("2", "周二");
+            put("3", "周三");
+            put("4", "周四");
+            put("5", "周五");
+            put("6", "周六");
+            put("0", "周日");
+        }
+    };
+    public HashMap<String, String> prod_price_hour = new HashMap<String, String>() {
+        {
+            put("00", "00");
+            put("01", "01");
+            put("02", "02");
+            put("03", "03");
+            put("04", "04");
+            put("05", "05");
+            put("06", "06");
+            put("07", "07");
+            put("08", "08");
+            put("09", "09");
+            put("10", "10");
+            put("11", "11");
+            put("12", "12");
+            put("13", "13");
+            put("14", "14");
+            put("15", "15");
+            put("16", "16");
+            put("17", "17");
+            put("18", "18");
+            put("19", "19");
+            put("20", "20");
+            put("21", "21");
+            put("22", "22");
+            put("23", "23");
+            put("24", "24");
+        }
+    };
+    public HashMap<String, String> prod_festival = new HashMap<String, String>() {
+        {
+            put("NEW", "元旦节");
+            put("SPR", "春节");
+            put("VAL", "情人节");
+            put("LAN", "元宵节");
+            put("WOM", "妇女节");
+            put("TOM", "清明节");
+            put("LAB", "劳动节");
+            put("DRA", "端午节");
+            put("MID", "中秋节");
+            put("NAT", "国庆节");
+            put("CHU", "重阳节");
+            put("CHR", "圣诞节");
+        }
+    };
+    public HashMap<String, String> error_code = new HashMap<String, String>() {
+        {
+            put("000", "成功");
+            put("-1101", "未登录");
+            put("-1102", "登录失败");
+            put("-1001", "数据库连接错误");
+            put("-1002", "数据库操作失败");
+            put("-1003", "无数据");
+            put("-1004", "数据操作失败");
+            put("-1005", "调用接口失败");
+            put("-2001", "缺少参数");
+            put("-2002", "参数校验失败");
+            put("-2003", "参数格式错误");
+            put("-10001", "经纬度参数不存在");
+            put("-10002", "标识不存在");
+            put("-10003", "标识类型不存在");
+            put("-10101", "新闻标识不存在");
+            put("-10201", "地图标识不存在");
+            put("-11002", "用户不存在");
+            put("-11003", "不能添加自己为好友");
+            put("-11004", "与用户的关联不存在");
+            put("-11005", "与用户的关联已存在");
+            put("-11006", "当前用户不允许改名");
+            put("-11007", "用户名已存在且密码不正确");
+            put("-11008", "无法解析密码方式");
+            put("-11009", "无参数传入");
+            put("-11101", "用户标识不存在");
+            put("-11102", "用户名或密码为不存在");
+            put("-11201", "图像路径不存在");
+            put("-12006", "绑定号码参数不存在");
+            put("-13001", "标识不存在");
+            put("-13002", "标识类型不存在");
+            put("-13003", "经纬度参数不存在");
+        }
+    };
+    public HashMap<String, String> STRANGER = new HashMap<String, String>() {
+        {
+            put("STRANGER", "STRANGER");
+        }
+    };
+    public HashMap<String, String> KEYWORD_STATE = new HashMap<String, String>() {
+        {
+            put("A", "正常使用");
+            put("N", "加入处理");
+        }
+    };
+    public HashMap<String, String> KEYWORD_LEVEL = new HashMap<String, String>() {
+        {
+            put("A", "绝对禁止");
+            put("B", "需要警告");
+        }
+    };
+    public HashMap<String, String> STAT_TRACK_TYPE = new HashMap<String, String>() {
+        {
+            put("SOUR", "来源");
+            put("DEST", "去向");
+        }
+    };
+    public HashMap<String, String> OTHER_FUNC = new HashMap<String, String>() {
+        {
+            put("active", "启动客户端");
+            put("login", "登录记录统计");
+        }
+    };
+    public HashMap<String, String> APP = new HashMap<String, String>() {
+        {
+            put("WEB", "WEB网站");
+            put("WAP", "WAP网站");
+            put("API", "客户端");
+        }
+    };
+    public HashMap<String, String> FUNC_URL_STATE = new HashMap<String, String>() {
+        {
+            put("A", "正常");
+            put("X", "禁用");
+        }
+    };
+    public HashMap<String, String> MSG_STATUS = new HashMap<String, String>() {
+        {
+            put("A", "已发送");
+            put("B", "草稿");
+            put("C", "定时发送中");
+        }
+    };
+}

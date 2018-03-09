@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: rno-indoor
+  messages:
+    basename: i18n/messages
+  profiles:
+    active: dev
+server:
+  port: 8381

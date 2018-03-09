@@ -1,0 +1,16 @@
+package com.hgicreate.rno.mapper;
+
+import com.hgicreate.rno.domain.MtSignalMeaDataInfo;
+import com.hgicreate.rno.web.rest.vm.MtSignalMeaDataQueryVM;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface MtSignalMeaDataMapper {
+
+    /**
+     * 查询移动终端测量数据
+     */
+    List<MtSignalMeaDataInfo> queryMtSignalMeaData(MtSignalMeaDataQueryVM vm);
+}

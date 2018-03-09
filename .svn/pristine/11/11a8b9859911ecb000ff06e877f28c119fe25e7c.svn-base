@@ -1,0 +1,11 @@
+package com.hgicreate.rno.repository;
+
+
+import com.hgicreate.rno.domain.MtSignalMeaData;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MtSignalMeaDataRepository extends JpaRepository<MtSignalMeaData,Long>{
+
+    @Override
+    <S extends MtSignalMeaData> S save(S s);
+}

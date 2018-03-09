@@ -1,0 +1,34 @@
+package com.hgicreate.rno.service;
+
+import com.hgicreate.rno.repository.DmLayerElementRepository;
+import com.hgicreate.rno.service.dto.DmLayerElementDTO;
+import com.hgicreate.rno.service.mapper.DmLayerElementMapper;
+import com.hgicreate.rno.web.rest.vm.DmLayerElementDataQueryVM;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+/**
+ * @author chao.xj
+ */
+@Slf4j
+@Service
+@Transactional(rollbackFor = Exception.class)
+public class DmLayerElementService {
+
+    private final DmLayerElementRepository dmLayerElementRepository;
+
+    public DmLayerElementService(DmLayerElementRepository dmLayerElementRepository) {
+        this.dmLayerElementRepository = dmLayerElementRepository;
+    }
+
+    public List<DmLayerElementDTO> dmLayerElementQuery(DmLayerElementDataQueryVM vm){
+        return dmLayerElementRepository.findByLayerId(vm.getLayerId()).
+                stream().
+                map(DmLayerElementMapper.INSTANCE::dmLayerElementToDmLayerElementDTO).
+                collect(Collectors.toList());
+    }
+}

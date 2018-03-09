@@ -1,0 +1,14 @@
+package com.hgicreate.rno.service.mapper;
+
+import com.hgicreate.rno.domain.DmLayerElement;
+import com.hgicreate.rno.service.dto.DmLayerElementDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
+
+@Mapper
+public interface DmLayerElementMapper {
+
+    DmLayerElementMapper INSTANCE = Mappers.getMapper(DmLayerElementMapper.class);
+
+    DmLayerElementDTO dmLayerElementToDmLayerElementDTO(DmLayerElement dmLayerElement);
+}
